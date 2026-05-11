@@ -16,6 +16,7 @@ async def save_mhtml(url: str, output_file: str):
     browser = await launch(headless=True, args=['--no-sandbox'])
     page = await browser.newPage()
     await page.goto(url, waitUntil='networkidle0')
+    await asyncio.sleep(5) 
     mhtml_data = await page._client.send('Page.captureSnapshot', {})
     with open(output_file, 'wb') as f:
         f.write(mhtml_data['data'].encode())
